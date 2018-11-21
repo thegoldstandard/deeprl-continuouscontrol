@@ -22,10 +22,6 @@ For this project, we will provide you with two separate versions of the Unity en
 
 The second version is useful for algorithms like [PPO](https://arxiv.org/pdf/1707.06347.pdf), [A3C](https://arxiv.org/pdf/1602.01783.pdf), and [D4PG](https://openreview.net/pdf?id=SyZipzbCb) that use multiple (non-interacting, parallel) copies of the same agent to distribute the task of gathering experience.  
 
-### Solving the Environment
-
-Note that your project submission need only solve one of the two versions of the environment. 
-
 #### Solve the Environment
 
 The task is episodic, and in order to solve the environment,  your agent must get an average score of +30 over 100 consecutive episodes.
