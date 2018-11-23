@@ -27,7 +27,10 @@ class Actor(nn.Module):
         self.fc1 = nn.Linear(state_size, fc1_units)
         self.fc2 = nn.Linear(fc1_units,fc2_units)
         self.fc3 = nn.Linear(fc2_units, action_size)
-        self.bn1 = nn.BatchNorm1d(fc1_units) # Added to vanilla implementation
+        self.tanh = nn.Tanh() # Added
+        self.bn1 = nn.BatchNorm1d(state_size) # Added 
+        self.bn2 = nn.BatchNorm1d(fc1_units) # Added 
+        self.bn3 = nn.BatchNorm1d(fc2_units) # Added
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -37,10 +40,12 @@ class Actor(nn.Module):
 
     def forward(self, state):
         """Build an actor (policy) network that maps states -> actions."""
+        x = self.bn1(state) # Added 
         x = F.relu(self.fc1(state))
-        x = self.bn1(x) # Added to vanilla implementation
+        x = self.bn2(x) # Added 
         x = F.relu(self.fc2(x))
-        return F.tanh(self.fc3(x))
+        x = self.bn3(x) #Added
+        return self.tanh(self.fc3(x)) # Replaced deprecated F.tanh() function w/ nn.tanh() class
 
 class Critic(nn.Module):
     """Critic (Value) Model."""
@@ -60,8 +65,9 @@ class Critic(nn.Module):
         self.fcs1 = nn.Linear(state_size, fcs1_units)
         self.fc2 = nn.Linear(fcs1_units+action_size, fc2_units)
         self.fc3 = nn.Linear(fc2_units, 1)
-        self.bn1 = nn.BatchNorm1d(fcs1_units)# Added to vanilla implementation
-        self.bn2 = nn.BatchNorm1d(fc2_units) # Added to vanilla implementation
+        self.bn1 = nn.BatchNorm1d(state_size) # Added
+        self.bn2 = nn.BatchNorm1d(fcs1_units) # Added
+        self.bn3 = nn.BatchNorm1d(fc2_units) # Added
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -71,9 +77,10 @@ class Critic(nn.Module):
 
     def forward(self, state, action):
         """Build a critic (value) network that maps (state, action) pairs -> Q-values."""
+        xs = self.bn1(state) # Added
         xs = F.relu(self.fcs1(state))
-        xs = self.bn1(xs)
+        xs = self.bn2(xs) # Added
         x = torch.cat((xs, action), dim=1)
         x = F.relu(self.fc2(x))
-        #x = self.bn2(x)
+        x = self.bn2(x) #Added
         return self.fc3(x)
