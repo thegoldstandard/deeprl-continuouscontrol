@@ -48,5 +48,5 @@ The task is episodic, and in order to solve the environment,  your agent must ge
 
 ### Solution
 
-The notebook `Continuous_Control.ipynb` contains the python code to load the environement,  define a reinforcement learning (RL) agent using the Deep Deterministic Policy Gradient ([DDPG](https://arxiv.org/pdf/1509.02971.pdf)) algorithm. DDPG is an actor-critic algorithm, the action-policy is defined by a deep neural network in the Actor() class and the primary code that is required to train the agent is contained in the Critic() class and the ddpg() class. 
+The notebook `Continuous_Control.ipynb` contains the python code to load the environment,  define a reinforcement learning (RL) agent using the Deep Deterministic Policy Gradient ([DDPG](https://arxiv.org/pdf/1509.02971.pdf)) algorithm. DDPG is an actor-critic algorithm, the action-policy is defined by a deep neural network in the Actor() class and the primary code that is required to train the agent is contained in the Critic() class and the ddpg() class. 
 
